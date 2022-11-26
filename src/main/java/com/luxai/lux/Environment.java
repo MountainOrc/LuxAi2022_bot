@@ -14,7 +14,7 @@ public class Environment {
     public int CYCLE_LENGTH;
     public int DAY_LENGTH;
     public int UNIT_ACTION_QUEUE_SIZE;
-    public Map<String, Robot> ROBOTS;
+    public Map<String, RobotInfo> ROBOTS;
     public int MAX_RUBBLE;
     public int FACTORY_RUBBLE_AFTER_DESTRUCTION;
     public int INIT_WATER_METAL_PER_FACTORY;

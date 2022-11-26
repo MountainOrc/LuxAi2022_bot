@@ -1,20 +1,15 @@
 package com.luxai.lux;
 
+import com.luxai.lux.Cargo;
+
 public class Robot {
 
-    public int METAL_COST;
-    public int POWER_COST;
-    public int CARGO_SPACE;
-    public int BATTERY_CAPACITY;
-    public int CHARGE;
-    public int INIT_POWER;
-    public int MOVE_COST;
-    public int RUBBLE_MOVEMENT_COST;
-    public int DIG_COST;
-    public int DIG_RUBBLE_REMOVED;
-    public int DIG_RESOURCE_GAIN;
-    public int DIG_LICHEN_REMOVED;
-    public int SELF_DESTRUCT_COST;
-    public int RUBBLE_AFTER_DESTRUCTION;
+    public int[] pos;
+    public int team_id;
+    public int power;
+    public String unit_id;
+    public String unit_type;
+    public String[] action_queue;
+    public Cargo cargo;
 
 }
