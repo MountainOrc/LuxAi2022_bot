@@ -1,11 +1,6 @@
 package com.luxai;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.luxai.lux.Environment;
-import com.luxai.lux.Obs;
-import com.luxai.lux.State;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,7 +23,7 @@ public class Bot
             //String json = "{\"obs\": {\"units\": {\"player_0\": {}, \"player_1\": {}}, \"teams\": {\"player_0\": {\"team_id\": 0, \"faction\": \"AlphaStrike\", \"water\": 300, \"metal\": 300, \"factories_to_place\": 3, \"factory_strains\": []}, \"player_1\": {\"team_id\": 1, \"faction\": \"AlphaStrike\", \"water\": 300, \"metal\": 300, \"factories_to_place\": 3, \"factory_strains\": []}}, \"factories\": {\"player_0\": {}, \"player_1\": {}}, \"board\": {\"rubble\": null, \"lichen\": null, \"lichen_strains\": null, \"factories_per_team\": 3}, \"real_env_steps\": -4}, \"step\": 1, \"remainingOverageTime\": 5.8669445514678955, \"player\": \"player_0\"}";
             String json = scanner.nextLine();
 
-            String filename2 = "C:\\Users\\apogasiy\\Doc\\luxai2022\\full.txt";
+            String filename2 = "C:\\Users\\apogasiy\\Doc\\luxai2022_debug\\full.txt";
             FileWriter fw2 = new FileWriter(filename2, true); //the true will append the new data
             fw2.write(json + "\n");
             fw2.close();
@@ -37,7 +32,7 @@ public class Bot
 
             ObjectMapper objectMapper = new ObjectMapper();
 
-            String filename = "C:\\Users\\apogasiy\\Doc\\luxai2022\\" + agent.me() + ".txt";
+            String filename = "C:\\Users\\apogasiy\\Doc\\luxai2022_debug\\" + agent.me() + ".txt";
             FileWriter fw = new FileWriter(filename, true); //the true will append the new data
             fw.write(String.valueOf(agent.step) + "\n");
             //fw.write(state.obs.teams.get(state.player).faction + "\n");
@@ -55,7 +50,7 @@ public class Bot
             if (jsonAction == null)
                 jsonAction = objectMapper.createObjectNode().toString();
 
-            String filename3 = "C:\\Users\\apogasiy\\Doc\\luxai2022\\" + agent.me() + "_out.txt";
+            String filename3 = "C:\\Users\\apogasiy\\Doc\\luxai2022_debug\\" + agent.me() + "_out.txt";
             FileWriter fw3 = new FileWriter(filename3, true); //the true will append the new data
             fw3.write(String.valueOf(agent.step) + "\n");
             //fw.write(state.obs.teams.get(state.player).faction + "\n");
