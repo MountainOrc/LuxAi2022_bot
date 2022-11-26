@@ -5,7 +5,7 @@
 3. Rename to JavaBot.jar
 4. Run with javamediator.py
 ```
-luxai2022 javamediator.py javamediator.py
+luxai2022 javamediator.py javamediator.py -o replay.json
 ```
 #### Fat-jar by maven
 ```bash
