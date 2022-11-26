@@ -2,7 +2,7 @@
 ## LOCAL RUN
 1. Create fat-jar by maven or javac (see below)
 2. Move jar to subfolder localrun
-3. Runame to JavaBot.jar
+3. Rename to JavaBot.jar
 4. Run with javamediator.py
 ```
 luxai2022 javamediator.py javamediator.py
@@ -26,7 +26,7 @@ mvn clean compile assembly:single
     ```
 4. Add external libs
     ```
-    unzip -o "*.jar" -d .\build
+    unzip -o ".\lib\*.jar" -d .\build
     ```
 5. Move to build folder
     ```
