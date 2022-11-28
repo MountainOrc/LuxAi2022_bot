@@ -159,26 +159,29 @@ public class Agent {
             this.obs.factories.clear(); this.obs.factories = state.obs.factories;
 
 
-            if (obs.board.rubbleUpdate != null) {
-                for (Map.Entry<String, Integer> entry : obs.board.rubbleUpdate.entrySet()) {
+            if (state.obs.board.rubbleUpdate != null) {
+                for (Map.Entry<String, Integer> entry : state.obs.board.rubbleUpdate.entrySet()) {
                     String[] coordinates = entry.getKey().split(",");
-                    int x = Integer.parseInt(coordinates[0]), y = Integer.parseInt(coordinates[1]);
+                    int x = Integer.parseInt(coordinates[0]);
+                    int y = Integer.parseInt(coordinates[1]);
                     this.obs.board.rubble[y][x] = entry.getValue();
                 }
             }
 
-            if (obs.board.lichenUpdate != null) {
-                for (Map.Entry<String, Integer> entry : obs.board.lichenUpdate.entrySet()) {
+            if (state.obs.board.lichenUpdate != null) {
+                for (Map.Entry<String, Integer> entry : state.obs.board.lichenUpdate.entrySet()) {
                     String[] coordinates = entry.getKey().split(",");
-                    int x = Integer.parseInt(coordinates[0]), y = Integer.parseInt(coordinates[1]);
+                    int x = Integer.parseInt(coordinates[0]);
+                    int y = Integer.parseInt(coordinates[1]);
                     this.obs.board.lichen[y][x] = entry.getValue();
                 }
             }
 
-            if (obs.board.lichen_strainsUpdate != null) {
-                for (Map.Entry<String, Integer> entry : obs.board.lichen_strainsUpdate.entrySet()) {
+            if (state.obs.board.lichen_strainsUpdate != null) {
+                for (Map.Entry<String, Integer> entry : state.obs.board.lichen_strainsUpdate.entrySet()) {
                     String[] coordinates = entry.getKey().split(",");
-                    int x = Integer.parseInt(coordinates[0]), y = Integer.parseInt(coordinates[1]);
+                    int x = Integer.parseInt(coordinates[0]);
+                    int y = Integer.parseInt(coordinates[1]);
                     this.obs.board.lichen_strains[y][x] = entry.getValue();
                 }
             }
