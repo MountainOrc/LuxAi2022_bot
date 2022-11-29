@@ -117,7 +117,6 @@ public class Agent {
     }
 
     private void robotProcessor(UnitAction unitAction) {
-        Map<String, Factory> myFactories = this.obs.factories.get(this.me());
         Map<String, Robot> units = this.obs.units.get(this.me());
         for (Robot robot : units.values()) {
             int xRobot = robot.pos[MoveUtils.X];
@@ -160,8 +159,9 @@ public class Agent {
                             // Tile has ice
                             if (this.obs.board.ice[y][x] > 0) {
                                 boolean isMyFactoryArea = false;
-                                for (String unitId : this.obs.factories.get(this.me()).keySet()) {
-                                    Factory factory = this.obs.factories.get(this.me()).get(unitId);
+                                Map<String, Factory> myFactories = this.obs.factories.get(this.me());
+                                for (String unitId : myFactories.keySet()) {
+                                    Factory factory = myFactories.get(unitId);
                                     if (factory.isFactoryArea(x, y))
                                         isMyFactoryArea = true;
                                 }
