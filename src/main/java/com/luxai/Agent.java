@@ -108,7 +108,7 @@ public class Agent {
     }
 
     private void factoryProcessor(UnitAction unitAction) {
-        Map<String, Factory> myFactories = obs.factories.get(this.me());
+        Map<String, Factory> myFactories = this.obs.factories.get(this.me());
         for (String unitId : myFactories.keySet()) {
             Factory factory = myFactories.get(unitId);
             if (factory.canBuildHeavy(this.env_cfg))
@@ -117,15 +117,15 @@ public class Agent {
     }
 
     private void robotProcessor(UnitAction unitAction) {
-        Map<String, Factory> myFactories = obs.factories.get(this.me());
-        Map<String, Robot> units = obs.units.get(this.me());
+        Map<String, Factory> myFactories = this.obs.factories.get(this.me());
+        Map<String, Robot> units = this.obs.units.get(this.me());
         for (Robot robot : units.values()) {
             int xRobot = robot.pos[MoveUtils.X];
             int yRobot = robot.pos[MoveUtils.Y];
             int factoryDistance = 100000;
             Factory nearestFactory = null;
             // Find nearest factory
-            for (Factory factory : obs.factories.get(this.me()).values()) {
+            for (Factory factory : this.obs.factories.get(this.me()).values()) {
                 int manhattan = MoveUtils.getManhattanDistance(xRobot, yRobot, factory.pos[MoveUtils.X], factory.pos[MoveUtils.Y]);
                 if (manhattan < factoryDistance) {
                     factoryDistance = manhattan;
@@ -138,14 +138,14 @@ public class Agent {
                 if (robot.cargo.ice > 40) {
                     // Factory orthogonally adjacent
                     if (factoryDistance <= 3) {
-                        if (robot.power > robot.getActionQueueCost(obs, env_cfg))
+                        if (robot.power > robot.getActionQueueCost(this.obs, this.env_cfg))
                             unitAction.actions.put(robot.unit_id, robot.transfer(factoryDirection, 0, robot.cargo.ice, false));
                     }
                     // Factory long away
                     else {
-                        int moveCost = robot.getMoveCost(obs, env_cfg, this.me(), factoryDirection);
+                        int moveCost = robot.getMoveCost(this.obs, this.env_cfg, this.me(), factoryDirection);
                         if (moveCost != MoveUtils.MOVE_UNAVAILABLE
-                                && robot.power >= (moveCost + robot.getActionQueueCost(obs, env_cfg)))
+                                && robot.power >= (moveCost + robot.getActionQueueCost(this.obs, this.env_cfg)))
                             unitAction.actions.put(robot.unit_id, robot.move(factoryDirection, false));
                     }
                 }
@@ -155,13 +155,13 @@ public class Agent {
                     int iceDistance = 100000;
                     int xIce = -1;
                     int yIce = -1;
-                    for (int x = 0; x < env_cfg.map_size; x++) {
-                        for (int y = 0; y < env_cfg.map_size; y++) {
+                    for (int x = 0; x < this.env_cfg.map_size; x++) {
+                        for (int y = 0; y < this.env_cfg.map_size; y++) {
                             // Tile has ice
-                            if (obs.board.ice[y][x] > 0) {
+                            if (this.obs.board.ice[y][x] > 0) {
                                 boolean isMyFactoryArea = false;
-                                for (String unitId : obs.factories.get(this.me()).keySet()) {
-                                    Factory factory = obs.factories.get(this.me()).get(unitId);
+                                for (String unitId : this.obs.factories.get(this.me()).keySet()) {
+                                    Factory factory = this.obs.factories.get(this.me()).get(unitId);
                                     if (factory.isFactoryArea(x, y))
                                         isMyFactoryArea = true;
                                 }
@@ -179,15 +179,15 @@ public class Agent {
                     // Robot on ice position
                     if (xIce != -1 && yIce != -1) {
                         if (xIce == xRobot && yIce == yRobot) {
-                            if (robot.power >= (robot.getDigCost(obs, env_cfg) + robot.getActionQueueCost(obs, env_cfg)))
+                            if (robot.power >= (robot.getDigCost(this.obs, this.env_cfg) + robot.getActionQueueCost(this.obs, this.env_cfg)))
                                 unitAction.actions.put(robot.unit_id, robot.dig(false));
                         }
                         // Ice long away
                         else {
                             int iceDirection = MoveUtils.getDirection(xRobot, yRobot, xIce, yIce);
-                            int moveCost = robot.getMoveCost(obs, env_cfg, this.me(), iceDirection);
+                            int moveCost = robot.getMoveCost(this.obs, this.env_cfg, this.me(), iceDirection);
                             if (moveCost != MoveUtils.MOVE_UNAVAILABLE
-                                    && robot.power >= (moveCost + robot.getActionQueueCost(obs, env_cfg)))
+                                    && robot.power >= (moveCost + robot.getActionQueueCost(this.obs, this.env_cfg)))
                                 unitAction.actions.put(robot.unit_id, robot.move(iceDirection, false));
                         }
                     }
