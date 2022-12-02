@@ -8,9 +8,7 @@ import com.luxai.lux.action.SpawnAction;
 import com.luxai.lux.action.UnitAction;
 import com.luxai.lux.objectmapper.Mapper;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Agent {
 
@@ -26,15 +24,34 @@ public class Agent {
     public String early_setup() throws JsonProcessingException {
         if (this.step == 0)
             return Mapper.getJson(new BidAction("AlphaStrike", 0));
-        if (this.obs.teams.get(this.me()).factories_to_place > 0) {
-            ArrayList<ArrayList<Integer>> mySpawn = this.obs.board.spawns.get(me());
-            int randomSpawnIndex = this.random.nextInt(mySpawn.size());
+        if (this.obs.teams.get(this.me()).factories_to_place > 0
+                && this.isMyTurnToPlaceFactory()) {
+            int randomSpawnX = this.random.nextInt(this.obs.board.valid_spawns_mask.length);
+            int randomSpawnY = this.random.nextInt(this.obs.board.valid_spawns_mask.length);
 
-            SpawnAction spawnAction = new SpawnAction(new int[]{mySpawn.get(randomSpawnIndex).get(0), mySpawn.get(randomSpawnIndex).get(1)},
+            if (!this.obs.board.valid_spawns_mask[randomSpawnX][randomSpawnY]) {
+                for (int j = 0; j < this.obs.board.valid_spawns_mask[randomSpawnX].length; j++) {
+                    if (this.obs.board.valid_spawns_mask[randomSpawnX][j]) {
+                        randomSpawnY = j;
+                        break;
+                    }
+                }
+                if (!this.obs.board.valid_spawns_mask[randomSpawnX][randomSpawnY]) {
+                    for (int i = 0; i < this.obs.board.valid_spawns_mask.length; i++) {
+                        for (int j = 0; j < this.obs.board.valid_spawns_mask[i].length; j++) {
+                            if (this.obs.board.valid_spawns_mask[i][j]) {
+                                randomSpawnX = i;
+                                randomSpawnY = j;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            SpawnAction spawnAction = new SpawnAction(new int[]{randomSpawnX, randomSpawnY},
                                                         100,//this.getObs().teams.get(this.me()).metal / 2,
                                                         100//this.getObs().teams.get(this.me()).water / 2
                                                      );
-
             return Mapper.getJson(spawnAction);
         }
         return null;
@@ -76,6 +93,8 @@ public class Agent {
             this.obs.real_env_steps = state.obs.real_env_steps;
             this.obs.units.clear(); this.obs.units = state.obs.units;
             this.obs.factories.clear(); this.obs.factories = state.obs.factories;
+            if (state.obs.real_env_steps < 0)
+                this.obs.board.valid_spawns_mask = state.obs.board.valid_spawns_mask;
 
 
             if (state.obs.board.rubbleUpdate != null) {
@@ -83,7 +102,7 @@ public class Agent {
                     String[] coordinates = entry.getKey().split(",");
                     int x = Integer.parseInt(coordinates[0]);
                     int y = Integer.parseInt(coordinates[1]);
-                    this.obs.board.rubble[y][x] = entry.getValue();
+                    this.obs.board.rubble[x][y] = entry.getValue();
                 }
             }
 
@@ -92,7 +111,7 @@ public class Agent {
                     String[] coordinates = entry.getKey().split(",");
                     int x = Integer.parseInt(coordinates[0]);
                     int y = Integer.parseInt(coordinates[1]);
-                    this.obs.board.lichen[y][x] = entry.getValue();
+                    this.obs.board.lichen[x][y] = entry.getValue();
                 }
             }
 
@@ -101,7 +120,7 @@ public class Agent {
                     String[] coordinates = entry.getKey().split(",");
                     int x = Integer.parseInt(coordinates[0]);
                     int y = Integer.parseInt(coordinates[1]);
-                    this.obs.board.lichen_strains[y][x] = entry.getValue();
+                    this.obs.board.lichen_strains[x][y] = entry.getValue();
                 }
             }
         }
@@ -157,7 +176,7 @@ public class Agent {
                     for (int x = 0; x < this.env_cfg.map_size; x++) {
                         for (int y = 0; y < this.env_cfg.map_size; y++) {
                             // Tile has ice
-                            if (this.obs.board.ice[y][x] > 0) {
+                            if (this.obs.board.ice[x][y] > 0) {
                                 boolean isMyFactoryArea = false;
                                 Map<String, Factory> myFactories = this.obs.factories.get(this.me());
                                 for (String unitId : myFactories.keySet()) {
@@ -198,6 +217,13 @@ public class Agent {
 
     public String me() {
         return this.player;
+    }
+
+    public boolean isMyTurnToPlaceFactory() {
+        if (this.obs.teams.get(this.me()).place_first)
+            return (this.step % 2 == 1);
+        else
+            return (this.step % 2 == 0);
     }
 
 }
