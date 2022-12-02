@@ -36,7 +36,7 @@ public class Bot
 
                 // - - - Main section - - -
                 String jsonAction = null;
-                if (agent.step <= agent.obs.board.factories_per_team + 1)
+                if (agent.obs.real_env_steps < 0)
                     jsonAction = agent.early_setup();
                 else {
                     jsonAction = agent.act();
