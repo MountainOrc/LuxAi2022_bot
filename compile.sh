@@ -9,4 +9,6 @@ echo 'Move to build folder'
 cd ./build
 echo 'Create fat-jar'
 jar -cfe JavaBot.jar com.luxai.Bot com/
+echo 'Move file'
+mv -f JavaBot.jar ../JavaBot.jar
 echo 'end'
