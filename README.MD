@@ -3,9 +3,9 @@
 1. Create fat-jar by maven or javac (see below)
 2. Move jar to subfolder localrun
 3. Rename to JavaBot.jar
-4. Run with javamediator.py
+4. Run with main.py
 ```
-luxai2022 javamediator.py javamediator.py -o replay.json
+luxai2022 main.py main.py -o replay.json
 ```
 #### Fat-jar by maven
 ```bash
