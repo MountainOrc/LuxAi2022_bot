@@ -36,3 +36,11 @@ mvn clean compile assembly:single
     ```
     jar -cfe JavaBot.jar com.luxai.Bot com/
     ```
+#### Fat-jar in linux
+1. Execute compile.sh
+    ```
+    sh compile.sh
+    ```
+## SERVER COMPILE AND RUN
+1. Compile with compile.sh
+2. Run with main.py
