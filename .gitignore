@@ -12,3 +12,5 @@
 /localrun/v_1_0_6
 /localrun/*.txt
 /src/test
+/log.txt
+/replay.json
