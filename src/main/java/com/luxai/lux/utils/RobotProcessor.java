@@ -33,14 +33,14 @@ public class RobotProcessor {
                     // Factory orthogonally adjacent
                     if (factoryDistance <= 3) {
                         if (robot.power > robot.getActionQueueCost(obs, environment))
-                            unitAction.actions.put(robot.unit_id, robot.transfer(factoryDirection, 0, robot.cargo.ice, false));
+                            unitAction.actions.put(robot.unit_id, robot.transfer(factoryDirection, 0, robot.cargo.ice, 0));
                     }
                     // Factory long away
                     else {
                         int moveCost = robot.getMoveCost(obs, environment, player, factoryDirection);
                         if (moveCost != MoveUtils.MOVE_UNAVAILABLE
                                 && robot.power >= (moveCost + robot.getActionQueueCost(obs, environment)))
-                            unitAction.actions.put(robot.unit_id, robot.move(factoryDirection, false));
+                            unitAction.actions.put(robot.unit_id, robot.move(factoryDirection, 0));
                     }
                 }
                 // Need to mine recourses
@@ -75,7 +75,7 @@ public class RobotProcessor {
                     if (xIce != -1 && yIce != -1) {
                         if (xIce == xRobot && yIce == yRobot) {
                             if (robot.power >= (robot.getDigCost(obs, environment) + robot.getActionQueueCost(obs, environment)))
-                                unitAction.actions.put(robot.unit_id, robot.dig(false));
+                                unitAction.actions.put(robot.unit_id, robot.dig(0));
                         }
                         // Ice long away
                         else {
@@ -83,7 +83,7 @@ public class RobotProcessor {
                             int moveCost = robot.getMoveCost(obs, environment, player, iceDirection);
                             if (moveCost != MoveUtils.MOVE_UNAVAILABLE
                                     && robot.power >= (moveCost + robot.getActionQueueCost(obs, environment)))
-                                unitAction.actions.put(robot.unit_id, robot.move(iceDirection, false));
+                                unitAction.actions.put(robot.unit_id, robot.move(iceDirection, 0));
                         }
                     }
                 }
