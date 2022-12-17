@@ -1,17 +1,17 @@
-package com.luxai.lux.utils;
+package com.luxai.utils;
 
 import com.luxai.lux.Environment;
 import com.luxai.lux.Factory;
 import com.luxai.lux.Obs;
 import com.luxai.lux.Robot;
-import com.luxai.lux.action.UnitAction;
+import com.luxai.lux.action.UnitActions;
 
 import java.util.Map;
 
 public class RobotProcessor {
 
-    public static UnitAction getActions(Obs obs, Environment environment, String player) {
-        UnitAction unitAction = new UnitAction();
+    public static UnitActions getActions(Obs obs, Environment environment, String player) {
+        UnitActions unitActions = new UnitActions();
         Map<String, Robot> units = obs.units.get(player);
         for (Robot robot : units.values()) {
             int xRobot = robot.pos[MoveUtils.X];
@@ -33,14 +33,14 @@ public class RobotProcessor {
                     // Factory orthogonally adjacent
                     if (factoryDistance <= 3) {
                         if (robot.power > robot.getActionQueueCost(obs, environment))
-                            unitAction.actions.put(robot.unit_id, robot.transfer(factoryDirection, 0, robot.cargo.ice, 0));
+                            unitActions.actions.put(robot.unit_id, robot.transfer(factoryDirection, 0, robot.cargo.ice, 0));
                     }
                     // Factory long away
                     else {
                         int moveCost = robot.getMoveCost(obs, environment, player, factoryDirection);
                         if (moveCost != MoveUtils.MOVE_UNAVAILABLE
                                 && robot.power >= (moveCost + robot.getActionQueueCost(obs, environment)))
-                            unitAction.actions.put(robot.unit_id, robot.move(factoryDirection, 0));
+                            unitActions.actions.put(robot.unit_id, robot.move(factoryDirection, 0));
                     }
                 }
                 // Need to mine recourses
@@ -75,7 +75,7 @@ public class RobotProcessor {
                     if (xIce != -1 && yIce != -1) {
                         if (xIce == xRobot && yIce == yRobot) {
                             if (robot.power >= (robot.getDigCost(obs, environment) + robot.getActionQueueCost(obs, environment)))
-                                unitAction.actions.put(robot.unit_id, robot.dig(0));
+                                unitActions.actions.put(robot.unit_id, robot.dig(0));
                         }
                         // Ice long away
                         else {
@@ -83,13 +83,13 @@ public class RobotProcessor {
                             int moveCost = robot.getMoveCost(obs, environment, player, iceDirection);
                             if (moveCost != MoveUtils.MOVE_UNAVAILABLE
                                     && robot.power >= (moveCost + robot.getActionQueueCost(obs, environment)))
-                                unitAction.actions.put(robot.unit_id, robot.move(iceDirection, 0));
+                                unitActions.actions.put(robot.unit_id, robot.move(iceDirection, 0));
                         }
                     }
                 }
             }
         }
-        return unitAction;
+        return unitActions;
     }
 
 }

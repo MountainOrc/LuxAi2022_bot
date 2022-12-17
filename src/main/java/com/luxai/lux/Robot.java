@@ -1,6 +1,6 @@
 package com.luxai.lux;
 
-import com.luxai.lux.utils.MoveUtils;
+import com.luxai.utils.MoveUtils;
 
 public class Robot {
 

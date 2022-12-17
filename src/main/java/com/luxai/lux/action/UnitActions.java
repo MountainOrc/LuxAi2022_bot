@@ -3,11 +3,11 @@ package com.luxai.lux.action;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UnitAction {
+public class UnitActions {
 
     public Map<String, Object> actions;
 
-    public UnitAction() {
+    public UnitActions() {
         this.actions = new HashMap<>();
     }
 
@@ -15,7 +15,7 @@ public class UnitAction {
         actions.put(unit_id, action);
     }
 
-    public void addActions(UnitAction unitActions) {
+    public void addActions(UnitActions unitActions) {
         this.actions.putAll(unitActions.actions);
     }
 
