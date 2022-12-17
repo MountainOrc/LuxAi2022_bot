@@ -1,6 +1,7 @@
 package com.luxai.lux.objectmapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luxai.Agent;
 import com.luxai.lux.State;
@@ -16,6 +17,7 @@ public class Mapper {
 
     public static void updateState(Agent agent, String json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         // check first step
         if (agent.obs == null) {
             json = json
