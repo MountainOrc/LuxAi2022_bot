@@ -1,4 +1,4 @@
-package com.luxai.lux.objectmapper;
+package com.luxai.objectmapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -38,8 +38,8 @@ public class Mapper {
             agent.remainingOverageTime = state.remainingOverageTime;
             agent.obs.teams = state.obs.teams;
             agent.obs.real_env_steps = state.obs.real_env_steps;
-            agent.obs.units.clear(); agent.obs.units = state.obs.units;
-            agent.obs.factories.clear(); agent.obs.factories = state.obs.factories;
+            agent.obs.units = state.obs.units;
+            agent.obs.factories = state.obs.factories;
             if (state.obs.real_env_steps < 0)
                 agent.obs.board.valid_spawns_mask = state.obs.board.valid_spawns_mask;
 

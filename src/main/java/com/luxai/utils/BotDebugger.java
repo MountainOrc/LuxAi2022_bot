@@ -1,4 +1,4 @@
-package com.luxai.lux.utils;
+package com.luxai.utils;
 
 import com.luxai.Agent;
 import com.luxai.Bot;
